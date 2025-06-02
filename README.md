@@ -2,7 +2,7 @@
 
 A modern web interface for managing Wake-on-LAN with network device discovery and monitoring.
 
-![WOL Dashboard](/static/screenshot.png)
+![WOL Dashboard](/static/Screenshot.png)
 
 ## Features
 
