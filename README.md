@@ -1,6 +1,6 @@
 # Wake-on-LAN Web Application
 
-A modern, beautiful web interface for managing Wake-on-LAN functionality with network device discovery and monitoring.
+A modern web interface for managing Wake-on-LAN with network device discovery and monitoring.
 
 ![WOL Dashboard](https://via.placeholder.com/800x450.png?text=Wake-on-LAN+Dashboard)
 
@@ -68,28 +68,27 @@ To update to the latest version:
 
 ## Project Structure
   ```web-wol/
-  ├── app.py                  # Main Flask application
-  ├── Dockerfile              # Docker configuration
-  ├── docker-compose.yml      # Docker Compose setup
-  ├── docker-entrypoint.sh    # Container initialization script
-  ├── requirements.txt        # Python dependencies
-  ├── start.sh                # Linux/macOS startup script
-  ├── start.ps1               # Windows startup script
-  ├── update.sh               # Linux/macOS update script
-  ├── update.ps1              # Windows update script
-  ├── README.md               # Documentation
-  ├── DEPLOY.md               # Deployment guide
-  ├── .gitignore              # Git exclusion settings
-  ├── .dockerignore           # Docker build exclusions
-  ├── config/                 # Device configuration storage
-  │   └── devices.json        # Default device configuration
-  ├── static/                 # Static web assets
-  │   ├── css/                # Stylesheets
-  │   │   └── style.css       # Custom styling
-  │   └── js/                 # JavaScript files
-  │       └── app.js          # Frontend functionality
-  └── templates/              # HTML templates
-      └── index.html          # Main dashboard template
+  ├── app.py                        # Main Flask application
+  ├── Dockerfile                    # Docker configuration
+  ├── docker-compose.yml            # Docker Compose setup
+  ├── docker-entrypoint.sh          # Container initialization script
+  ├── requirements.txt              # Python dependencies
+  ├── start.sh                      # Linux/macOS startup script
+  ├── update.sh                     # Linux/macOS update script
+  ├── README.md                     # Documentation
+  ├── .gitignore                    # Git exclusion settings
+  ├── .dockerignore                 # Docker build exclusions
+  ├── config/                       # Device configuration storage
+  │   └── devices.json              # Default device configuration
+  ├── static/                       # Static web assets
+  │   ├── css/                      # Stylesheets
+  │   │   └── style.css             # Custom styling
+  │   │   └── pico.pumpkin.min.css  # Pico styling 
+  │   ├── js/                       # JavaScript files
+  │   │   └── app.js                # Frontend functionality
+  │   ├── tailscale-pumpkin.png     # icon
+  └── templates/                    # HTML templates
+      └── index.html                # Main dashboard template
   ```
 
 ## Docker Customization
