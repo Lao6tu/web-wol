@@ -1,0 +1,9 @@
+Flask==2.3.3
+wakeonlan==3.0.0
+netifaces==0.11.0
+python-nmap==0.7.1
+gunicorn==21.2.0
+requests==2.31.0
+pyroute2==0.7.9
+pymac==1.0.0
+python-dateutil==2.8.2

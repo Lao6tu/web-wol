@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="Dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wake-on-LAN Dashboard</title>
+
+    <!-- Pico CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/pico.pumpkin.min.css') }}"
+    />
+    <!-- Custom CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="container" style="margin-top: 1rem; margin-bottom: 1rem;">
+      <ul style="margin-left: 0;">
+        <li>
+          <a href="#" class="contrast">
+            <img
+              src="{{ url_for('static', filename='tailscale-pumpkin.png') }}"
+              alt="Network"
+              width="30"
+              height="30"
+              style="margin-right: 0.5rem"
+            />
+          </a>
+          <strong>Tailscale Wake-on-LAN</strong>
+        </li>
+      </ul>
+      <ul style="margin-right: 0;"></ul>
+        <li>
+          <button class="outline" id="themeToggle" aria-label="Toggle theme">
+            <span id="themeIcon">☀️</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container"> 
+      <section style="margin-bottom: 2rem">
+        <div class="grid">
+          <button id="scanBtn" class="outline">
+            <svg class="svg-inline--fa fa-wifi" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="wifi" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" style="width: 1em; height: 1em; margin-right: 0.5rem;">
+              <path fill="currentColor" d="M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8C211.4 277.1 263.2 256 320 256zm0 96a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path>
+            </svg>
+            <strong>Scan Network</strong>
+          </button>
+          <button id="addDeviceBtn" class="outline">
+            <svg class="svg-inline--fa fa-square-plus" aria-hidden="true" focusable="false" data-prefix="far" data-icon="square-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 1em; height: 1em; margin-right: 0.5rem;">
+              <path fill="currentColor" d="M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM200 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
+            </svg>
+            <strong>Add Device</strong>
+          </button>          
+          <button id="discoverBtn" class="outline">
+            <svg class="svg-inline--fa fa-magnifying-glass" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 1em; height: 1em; margin-right: 0.5rem;">
+              <path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path>
+            </svg>
+            <strong>List Device</strong>
+          </button><button id="refreshBtn" class="outline">
+            <svg class="svg-inline--fa fa-arrow-rotate-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-rotate-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 1em; height: 1em; margin-right: 0.5rem;">
+              <path fill="currentColor" d="M463.5 224H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1c-87.5 87.5-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5z"></path>
+            </svg>
+            <strong>Refresh</strong>
+          </button>
+        </div>
+      </section>
+
+      <!-- Loading Indicator -->
+      <article id="loadingIndicator" aria-busy="true" style="display: none">
+        <p>Scanning network...</p>
+      </article>
+
+      <!-- Last Scan Info -->
+      <article id="lastScanInfo" style="display: none">
+        <p><strong>Last scan:</strong> <span id="lastScanTime">Never</span></p>
+      </article>
+
+      <!-- Devices Table -->
+      <article>
+        <header>
+          <h3>Network Devices</h3>
+        </header>
+        <div class="overflow-auto">
+          <table id="devicesTableContainer">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Name</th>
+                <th>IP Address</th>
+                <th>MAC Address</th>
+                <th>Last Seen</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="devicesTable">
+              <!-- Devices will be populated here -->
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <!-- No Devices Message -->
+      <article id="noDevicesMessage" style="display: none">
+        <header>
+          <h3>No devices configured</h3>
+        </header>
+        <p>
+          Add your first device or scan the network to discover devices
+          automatically.
+        </p>
+        <button class="primary">
+          <svg class="svg-inline--fa fa-square-plus" aria-hidden="true" focusable="false" data-prefix="far" data-icon="square-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 1em; height: 1em; margin-right: 0.5rem;">
+            <path fill="currentColor" d="M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM200 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
+          </svg>
+          Add Your First Device
+        </button>
+      </article>
+    </main>
+    <!-- Add Device Modal -->
+    <dialog id="addDeviceModal">
+      <article>        <header>
+          <h4>
+            <svg class="svg-inline--fa fa-square-plus" aria-hidden="true" focusable="false" data-prefix="far" data-icon="square-plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 1em; height: 1em; margin-right: 0.5rem;">
+              <path fill="currentColor" d="M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM200 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path>
+            </svg>
+            Add New Device
+          </h4>
+          <button id="closeAddModal" aria-label="Close" rel="prev"></button>
+        </header>
+        <form id="addDeviceForm">
+          <fieldset>
+            <label for="deviceName">
+              Device Name *
+              <input
+                type="text"
+                id="deviceName"
+                name="deviceName"
+                required
+                placeholder="e.g., Living Room PC"
+              />
+            </label>
+            <label for="deviceIP">
+              IP Address *
+              <input
+                type="text"
+                id="deviceIP"
+                name="deviceIP"
+                required
+                placeholder="e.g., 192.168.1.100"
+                pattern="^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$"
+              />
+              <small>Enter the device's IP address</small>
+            </label>
+            <label for="deviceMAC">
+              MAC Address
+              <input
+                type="text"
+                id="deviceMAC"
+                name="deviceMAC"
+                placeholder="e.g., AA:BB:CC:DD:EE:FF"
+                pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$"
+              />
+              <small>Optional - required for Wake-on-LAN functionality</small>
+            </label>
+          </fieldset>
+        </form>
+        <footer>
+          <button id="cancelAddDevice" class="secondary">Cancel</button>
+          <button id="submitAddDevice" class="primary">
+            <svg class="svg-inline--fa fa-check" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 1em; height: 1em; margin-right: 0.5rem;">
+              <path fill="currentColor" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"></path>
+            </svg>
+            Add Device
+          </button>
+        </footer>
+      </article>
+    </dialog>
+
+    <!-- Edit Device Modal -->
+    <dialog id="editDeviceModal">
+      <article>        <header>
+          <h4>
+            <svg class="svg-inline--fa fa-pen-to-square" aria-hidden="true" focusable="false" data-prefix="far" data-icon="pen-to-square" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 1em; height: 1em; margin-right: 0.5rem;">
+              <path fill="currentColor" d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"></path>
+            </svg>
+            Edit Device
+          </h4>
+          <button id="closeEditModal" aria-label="Close" rel="prev"></button>
+        </header>
+        <form id="editDeviceForm">
+          <fieldset>
+            <input type="hidden" id="editDeviceId" />
+            <label for="editDeviceName">
+              Device Name *
+              <input
+                type="text"
+                id="editDeviceName"
+                name="editDeviceName"
+                required
+              />
+            </label>
+            <label for="editDeviceIP">
+              IP Address *
+              <input
+                type="text"
+                id="editDeviceIP"
+                name="editDeviceIP"
+                required
+                pattern="^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$"
+              />
+            </label>
+            <label for="editDeviceMAC">
+              MAC Address
+              <input
+                type="text"
+                id="editDeviceMAC"
+                name="editDeviceMAC"
+                pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$"
+              />
+            </label>
+          </fieldset>
+        </form>
+        <footer>
+          <button id="cancelEditDevice" class="secondary">Cancel</button>
+          <button id="submitEditDevice" class="primary">
+            <svg class="svg-inline--fa fa-check" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" style="width: 1em; height: 1em; margin-right: 0.5rem;">
+              <path fill="currentColor" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"></path>
+            </svg>
+            Save Changes
+          </button>
+        </footer>
+      </article>
+    </dialog>
+
+    <!-- Discovery Results Modal -->
+    <dialog id="discoveryModal">
+      <article>        <header>
+          <h3>
+            <svg class="svg-inline--fa fa-wifi" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="wifi" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" style="width: 1em; height: 1em; margin-right: 0.5rem;">
+              <path fill="currentColor" d="M54.2 202.9C123.2 136.7 216.8 96 320 96s196.8 40.7 265.8 106.9c12.8 12.2 33 11.8 45.2-.9s11.8-33-.9-45.2C549.7 79.5 440.4 32 320 32S90.3 79.5 9.8 156.7C-2.9 169-3.3 189.2 8.9 202s32.5 13.2 45.2 .9zM320 256c56.8 0 108.6 21.1 148.2 56c13.3 11.7 33.5 10.4 45.2-2.8s10.4-33.5-2.8-45.2C459.8 219.2 393 192 320 192s-139.8 27.2-190.5 72c-13.3 11.7-14.5 31.9-2.8 45.2s31.9 14.5 45.2 2.8C211.4 277.1 263.2 256 320 256zm0 128a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path>
+            </svg>
+            Discovered Devices
+          </h3>
+          <button
+            id="closeDiscoveryModal"
+            aria-label="Close"
+            rel="prev"
+          ></button>
+        </header>
+        <div id="discoveryResults">
+          <!-- Discovery results will be populated here -->
+        </div>
+        <footer>
+          <button id="closeDiscoveryBtn" class="secondary">Close</button>
+        </footer>
+      </article>
+    </dialog>
+
+    <!-- Toast Notification -->
+    <div id="toastContainer" class="toast-container">
+      <article
+        id="toastNotification"
+        class="toast"
+        role="alert"
+        style="display: none"
+      >
+        <header>
+          <strong>🔔 Notification</strong>
+          <button id="closeToast" aria-label="Close">&times;</button>
+        </header>
+        <p id="toastMessage">
+          <!-- Toast message will be set here -->
+        </p>
+      </article>
+    </div>
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/helpers.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>
