@@ -29,9 +29,6 @@ A modern web interface for managing Wake-on-LAN with network device discovery an
 ```bash
 # Linux/macOS
 ./start.sh
-
-# Windows PowerShell
-.\start.ps1
 ```
 
 4. Access the application at `http://localhost:5000`
@@ -43,9 +40,6 @@ To update to the latest version:
 ```bash
 # Linux/macOS
 ./update.sh
-
-# Windows PowerShell
-.\update.ps1
 ```
 
 ## Manual Installation
