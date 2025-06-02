@@ -1,6 +1,6 @@
 # Wake-on-LAN Web Application
 
-A modern, beautiful web interface for managing Wake-on-LAN functionality with network device discovery and monitoring.
+A modern web interface for managing Wake-on-LAN with network device discovery and monitoring.
 
 ![WOL Dashboard](https://via.placeholder.com/800x450.png?text=Wake-on-LAN+Dashboard)
 
