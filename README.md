@@ -10,7 +10,7 @@ A modern web interface for managing Wake-on-LAN with network device discovery an
 - 🔍 **Network Scanning**: Automatic discovery of devices on your network
 - ⚡ **Wake-on-LAN**: Send magic packets to wake up sleeping devices
 - 📊 **Real-time Status**: Monitor device online/offline status
-- 🎨 **Beautiful UI**: Modern, responsive design with dark/light theme
+- 🎨 **Adaptive UI**: Modern, responsive design with dark/light theme
 - 🐳 **Docker Ready**: Complete containerization with Docker Compose
 
 ## Quick Start with Docker
