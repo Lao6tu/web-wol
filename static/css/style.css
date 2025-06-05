@@ -17,7 +17,77 @@ main.container {
     margin: 0 auto;
 }
 
-/* Scale down specific UI elements */
+/* Button Animation & Focus State Management */
+button {
+    transition: all 0.15s ease-in-out !important;
+}
+
+/* Global button focus states */
+button:focus:not(:focus-visible) {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Prevent stuck active states */
+button:active {
+    transition: all 0.05s ease-in-out !important;
+}
+
+.action-buttons button {
+    transition: all 0.1s ease-in-out !important;
+}
+
+.action-buttons button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.action-buttons button:focus-visible {
+    outline: 1px solid var(--pico-primary) !important;
+    outline-offset: 1px !important;
+}
+
+.action-buttons button:focus:not(:focus-visible) {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.action-buttons button:active {
+    transform: scale(0.95) !important;
+    transition: transform 0.05s ease-in-out !important;
+}
+
+/* Prevent stuck focus states */
+.action-buttons button:not(:hover):not(:active) {
+    transform: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.action-buttons button {
+    outline: none !important;
+}
+
+.action-buttons button:not(:focus-visible) {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.grid button:active {
+    transform: scale(0.98) !important;
+    transition: transform 0.05s ease-in-out !important;
+}
+
+dialog button:active {
+    transform: scale(0.95) !important;
+    transition: transform 0.05s ease-in-out !important;
+}
+
+#themeToggle:active {
+    transform: scale(0.9) !important;
+    transition: transform 0.05s ease-in-out !important;
+}
+
 main article {
     padding: 1rem;
     margin-top: 3rem;
@@ -32,7 +102,6 @@ main table {
     margin: 0;
 }
 
-/* Scale modals */
 dialog {
     font-size: 0.85rem;
 }
@@ -41,7 +110,6 @@ dialog article {
     max-width: 600px;
 }
 
-/* Align navigation with main content */
 nav.container {
     font-size: 1.2rem !important;
     max-width: 1300px !important;
@@ -56,7 +124,6 @@ nav ul li a img {
     vertical-align: middle;
 }
 
-/* Device Status Indicators */
 .status-online {
     color: green;
     font-weight: bold;
@@ -73,7 +140,6 @@ nav ul li a img {
 }
 
 /* Action Buttons in Table */
-
 table thead tr th:first-child {
     border-top-left-radius: 0.5rem;
 }
@@ -94,6 +160,8 @@ table tbody tr:last-child td:last-child {
     display: flex;
     gap: 0rem;
     flex-wrap: wrap;
+    top: 0.5rem;
+    border-radius: 1rem;
 }
 
 .action-buttons button {
@@ -101,10 +169,8 @@ table tbody tr:last-child td:last-child {
     font-size: 0.75rem;
     min-height: 2rem;
     border-radius: 1rem;
-    top: 0.5rem;
 }
 
-/* For the main action buttons grid */
 .grid button {
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
@@ -120,7 +186,6 @@ table tbody tr:last-child td:last-child {
     border-radius: 1rem;
 }
 
-/* Modal Header Alignment */
 dialog article header {
     display: flex;
     justify-content: space-between;
@@ -134,7 +199,6 @@ dialog article header h4 {
     margin: 0;
 }
 
-/* Modal Footer Buttons */
 dialog article footer button {
     border-radius: 1rem;
     padding: 0.5rem 1rem;
@@ -142,7 +206,6 @@ dialog article footer button {
     min-height: 2.5rem;
 }
 
-/* Article Header Centering */
 article header {
     display: flex;
     align-items: center;
@@ -156,7 +219,6 @@ article header h4 {
     margin: 0;
 }
 
-/* Toast Notifications */
 .toast-container {
     position: fixed;
     bottom: 1rem;
@@ -194,10 +256,16 @@ article header h4 {
     padding: 0;
     margin: 0;
     color: var(--muted-color);
+    transition: color 0.15s ease-in-out !important;
 }
 
 .toast button:hover {
     color: var(--color);
+}
+
+.toast button:active {
+    transform: scale(0.9) !important;
+    transition: all 0.05s ease-in-out !important;
 }
 
 /* Loading States */
@@ -206,12 +274,20 @@ article header h4 {
     padding: 2rem;
 }
 
-/* Responsive Table */
+/* Prevent animation conflicts during loading states */
+button[aria-busy="true"] {
+    transform: none !important;
+    transition: all 0.15s ease-in-out !important;
+}
+
+button[aria-busy="true"]:active {
+    transform: none !important;
+}
+
 .overflow-auto {
     overflow-x: auto;
 }
 
-/* Theme Toggle */
 #themeToggle {
     padding: 0.5rem;
     border-radius: 50%;
@@ -241,7 +317,6 @@ article header h4 {
     background: var(--secondary);
 }
 
-/* Discovery Results */
 .discovery-device {
     padding: 1rem;
     margin-bottom: 0.5rem;
@@ -268,7 +343,6 @@ article header h4 {
     padding-block: 10px;
 }
 
-/* Style for aligning device info and button */
 .discovery-device {
     display: flex;
     justify-content: space-between;
@@ -284,7 +358,19 @@ article header h4 {
     flex-grow: 1;
 }
 
-/* Grid adjustments for smaller screens */
+/* JavaScript-managed button states */
+.button-pressed {
+    transform: scale(0.95) !important;
+    transition: transform 0.05s ease-in-out !important;
+}
+
+.action-buttons .button-pressed {
+    transform: scale(0.9) !important;
+}
+
+/*******************************************/
+
+/* Responsive Styles */
 @media (max-width: 1068px) {
     .nav-icons {
         display: none !important;
@@ -370,5 +456,13 @@ article header h4 {
         gap: 0rem;
         border-radius: 1rem;
         min-height: 2rem;
+    }
+
+    .discovery-device button {
+        width: fit-content;
+        padding: 0.5rem;
+        font-size: 0.85rem;
+        min-height: 2.5rem;
+        border-radius: 1.5rem;
     }
 }

@@ -1,8 +1,8 @@
 # Wake-on-LAN Web Application
 
-A modern web interface for managing Wake-on-LAN with network device discovery and monitoring.
+A modern, beautiful web interface for managing Wake-on-LAN functionality with network device discovery and monitoring.
 
-![WOL Dashboard](/static/Screenshot.png)
+![WOL Dashboard](https://via.placeholder.com/800x450.png?text=Wake-on-LAN+Dashboard)
 
 ## Features
 
@@ -10,7 +10,7 @@ A modern web interface for managing Wake-on-LAN with network device discovery an
 - 🔍 **Network Scanning**: Automatic discovery of devices on your network
 - ⚡ **Wake-on-LAN**: Send magic packets to wake up sleeping devices
 - 📊 **Real-time Status**: Monitor device online/offline status
-- 🎨 **Adaptive UI**: Modern, responsive design with dark/light theme
+- 🎨 **Beautiful UI**: Modern, responsive design with dark/light theme
 - 🐳 **Docker Ready**: Complete containerization with Docker Compose
 
 ## Quick Start with Docker
@@ -29,6 +29,9 @@ A modern web interface for managing Wake-on-LAN with network device discovery an
 ```bash
 # Linux/macOS
 ./start.sh
+
+# Windows PowerShell
+.\start.ps1
 ```
 
 4. Access the application at `http://localhost:5000`
@@ -40,6 +43,9 @@ To update to the latest version:
 ```bash
 # Linux/macOS
 ./update.sh
+
+# Windows PowerShell
+.\update.ps1
 ```
 
 ## Manual Installation
@@ -59,31 +65,6 @@ To update to the latest version:
    ```bash
    python app.py
    ```
-
-## Project Structure
-  ```web-wol/
-  ├── app.py                        # Main Flask application
-  ├── Dockerfile                    # Docker configuration
-  ├── docker-compose.yml            # Docker Compose setup
-  ├── docker-entrypoint.sh          # Container initialization script
-  ├── requirements.txt              # Python dependencies
-  ├── start.sh                      # Linux/macOS startup script
-  ├── update.sh                     # Linux/macOS update script
-  ├── README.md                     # Documentation
-  ├── .gitignore                    # Git exclusion settings
-  ├── .dockerignore                 # Docker build exclusions
-  ├── config/                       # Device configuration storage
-  │   └── devices.json              # Default device configuration
-  ├── static/                       # Static web assets
-  │   ├── css/                      # Stylesheets
-  │   │   └── style.css             # Custom styling
-  │   │   └── pico.pumpkin.min.css  # Pico styling 
-  │   ├── js/                       # JavaScript files
-  │   │   └── app.js                # Frontend functionality
-  │   ├── tailscale-pumpkin.png     # icon
-  └── templates/                    # HTML templates
-      └── index.html                # Main dashboard template
-  ```
 
 ## Docker Customization
 
@@ -146,7 +127,7 @@ Device configurations are stored in `config/devices.json`. The format is:
     "ip": "192.168.1.100",
     "mac": "AA:BB:CC:DD:EE:FF",
     "status": "offline",
-    "last_seen": "2025-05-30T12:00:00.000Z"
+    "last_seen": "2023-05-30T12:00:00.000Z"
   }
 ]
 ```
@@ -162,12 +143,6 @@ Device configurations are stored in `config/devices.json`. The format is:
 - This application is intended for use on trusted local networks
 - No authentication is implemented by default
 - Consider adding authentication for production deployments
-
-## Customization
-
-- Edit `static/css/style.css` to customize the appearance
-- Modify `templates/index.html` to add custom UI elements
-- Update `app.py` to add new functionality
 
 ## Troubleshooting
 
@@ -201,9 +176,6 @@ docker-compose build
 # Set environment variable for Flask development mode
 export FLASK_ENV=development
 
-# Update the build
-./update.sh
-
 # Run Flask development server
 python app.py
 ```
@@ -211,8 +183,3 @@ python app.py
 ## License
 
 MIT License - feel free to use and modify as needed.
-
-
-CSS style sheet is supported by:
- * Pico CSS ✨ v2.1.1 (https://picocss.com)
- * Copyright 2019-2025 - Licensed under MIT

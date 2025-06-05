@@ -1,6 +1,8 @@
 #!/bin/bash
 # Container initialization script
 
+echo "Initializing container..."
+
 # Ensure config directory exists and has correct permissions
 mkdir -p /app/config
 chmod 755 /app/config
