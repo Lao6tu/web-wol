@@ -53,7 +53,6 @@ To update to the latest version:
    - **Ubuntu/Debian**: `sudo apt-get install nmap`
    - **CentOS/RHEL**: `sudo yum install nmap`
    - **macOS**: `brew install nmap`
-   - **Windows**: Download from https://nmap.org/download.html
 
 3. Run the application:
    ```bash
